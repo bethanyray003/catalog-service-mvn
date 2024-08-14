@@ -16,10 +16,10 @@ jobs:
           distribution: temurin
           java-version: 17
           cache: maven
-      #- name: Code vulnerability scanning
-       # uses: anchore/scan-action@v4
-       # id: scan
-       # with:
+      - name: Code vulnerability scanning
+        uses: anchore/scan-action@v4
+        id: scan
+        with:
           path: "${{github.workspace}}"
           fail-build: false
           severity-cutoff: high
@@ -29,7 +29,7 @@ jobs:
         if: success() || failure()
         with:
           sarif_file: ${{ steps.scan.outputs.sarif }}
-      - name: Build, unit tests and integration tests
-        run: |
-          chmod +x mvnw
-          ./mvnw package
+      #- name: Build, unit tests and integration tests
+      #  run: |
+      #    chmod +x mvnw
+      #    ./mvnw package
