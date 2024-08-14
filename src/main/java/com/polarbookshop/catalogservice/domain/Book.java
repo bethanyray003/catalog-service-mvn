@@ -1,12 +1,21 @@
 package com.polarbookshop.catalogservice.domain;
 
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.annotation.Version;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Positive;
 
+import java.time.Instant;
+
 
 public record Book(
+	@Id
+	Long id,
 	
 	@NotBlank(message="Add a fucking ISBN you dolt!!")
 	@Pattern(                                               
@@ -23,8 +32,20 @@ public record Book(
 
 	@NotNull(message="If you want to earn a living, GIVE A FUCKING PRICE!!")
 	@Positive(message="So you're going to pay me to read this book??")
-	Double price
+	Double price,
+
+	@CreatedDate
+	Instant createdDate,
+
+	@LastModifiedDate
+	Instant lastModifiedDate,
+
+	@Version
+	int version
 ){
 
+	public static Book of(String isbn, String title, String author, Double price){
+		return new Book(null, isbn, title, author, price, null, null, 0);
+	}
 }
 

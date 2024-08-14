@@ -8,6 +8,8 @@ import org.springframework.stereotype.Component;
 import com.polarbookshop.catalogservice.domain.Book;
 import com.polarbookshop.catalogservice.domain.BookRepository;
 
+import java.util.List;
+
 @Component
 @Profile("testdata")
 public class BookDataLoader {
@@ -19,10 +21,12 @@ public class BookDataLoader {
 
     @EventListener(ApplicationReadyEvent.class)
     public void loadBookTestData(){
-        var book1 = new Book("1234567891", "Northern Lights", "Lyra Silverstar", 15.99);
-        var book2 = new Book("9876543219", "The Silmarillion", "JRR Tolkien", 10.0);
+        bookRepository.deleteAll();
+        var book1 = Book.of("1234567891", "Northern Lights", "Lyra Silverstar", 15.99);
+        var book2 = Book.of("9876543219", "The Silmarillion", "JRR Tolkien", 10.0);
 
-        bookRepository.save(book1);
-        bookRepository.save(book2);
+        //bookRepository.save(book1);
+        //bookRepository.save(book2);
+        bookRepository.saveAll(List.of(book1, book2));
     }
 }
