@@ -12,7 +12,7 @@ jobs:
       - name: Checkout source code
         uses: actions/checkout@v4.1.7
       - name: Setup JDK
-        uses: actions/setup-java@v4.2.2d
+        uses: actions/setup-java@v4.2.2
         with:
           distribution: temurin
           java-version: 17
